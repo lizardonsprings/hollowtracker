@@ -6,6 +6,7 @@ import CharmsPage from 'src/components/CharmsPage.vue';
 export default {
   setup() {
     return {
+      percentage: 0,
       drawerLeft: ref(true),
       drawerRight: ref(false),
     };
@@ -39,7 +40,7 @@ export default {
         <q-footer reveal class="bg-black">
           <q-toolbar>
             <q-toolbar-title></q-toolbar-title>
-            <h5>You are currently <b>27%</b> out of 112% Complete</h5>
+            <h5>You are currently {{ percentage }}% out of 112% Complete</h5>
             <q-img src="broken-vessel.png" width="80px" />
           </q-toolbar>
         </q-footer>
@@ -49,7 +50,7 @@ export default {
           :width="200"
           :breakpoint="700"
           class="grad text-white"
-          fixed
+          overlay
           style="top: 0; bottom: 0; height: 100vh"
         >
           <nav-menu />
@@ -59,8 +60,7 @@ export default {
           <q-page class="q-pa-md bg-grey-10 text-white mainborders">
             <charms-page />
             <q-page-sticky position="top" expand class="text-white">
-              <q-scroll-area style="height: 200px; max-width: 300px">
-              </q-scroll-area>
+              <q-scroll-area> </q-scroll-area>
             </q-page-sticky>
           </q-page>
 
