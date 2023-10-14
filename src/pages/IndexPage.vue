@@ -1,49 +1,64 @@
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { defineComponent, ref } from 'vue';
+import { ref } from 'vue';
 
-export default defineComponent({
-  name: 'IndexPage',
-  components: { ExampleComponent },
+export default {
   setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1',
-      },
-      {
-        id: 2,
-        content: 'ct2',
-      },
-      {
-        id: 3,
-        content: 'ct3',
-      },
-      {
-        id: 4,
-        content: 'ct4',
-      },
-      {
-        id: 5,
-        content: 'ct5',
-      },
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200,
-    });
-    return { todos, meta };
+    return {
+      drawerLeft: ref(true),
+      drawerRight: ref(false),
+    };
   },
-});
+};
 </script>
 
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="PISS PISS"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="bg-black">
+    <div class="q-pa-lg row justify-center">
+      <q-layout
+        view="hHh lpR fFf"
+        container
+        style="height: 92vh; max-width: 1200px"
+        class="shadow-2 rounded-borders bg-grey-10"
+        :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+      >
+        <q-header reveal :class="$q.dark.isActive ? 'bg-green' : 'bg-black'">
+          <q-toolbar>
+            <q-btn
+              flat
+              @click="drawerLeft = !drawerLeft"
+              round
+              dense
+              icon="menu"
+            />
+            <q-toolbar-title>A Hollow Knight Tracker</q-toolbar-title>
+            <p>27 / 112% Complete</p>
+          </q-toolbar>
+        </q-header>
+
+        <q-footer reveal :class="$q.dark.isActive ? 'bg-green' : 'bg-black'">
+          <q-toolbar>
+            <q-toolbar-title>Footer</q-toolbar-title>
+          </q-toolbar>
+        </q-footer>
+
+        <q-drawer v-model="drawerLeft" :width="200" :breakpoint="700">
+          <q-scroll-area class="fit bg-grey-10 text-white">
+            <div class="q-pa-sm">NAV</div>
+          </q-scroll-area>
+        </q-drawer>
+
+        <q-page-container>
+          <q-page class="q-pa-md bg-grey-10 text-white">
+            CONTENT
+            <q-page-sticky position="top" expand class="bg-primary text-white">
+            </q-page-sticky>
+          </q-page>
+
+          <q-page-scroller position="bottom">
+            <q-btn fab icon="keyboard_arrow_up" color="red" />
+          </q-page-scroller>
+        </q-page-container>
+      </q-layout>
+    </div>
   </q-page>
 </template>

@@ -2,10 +2,10 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'App',
+  name: 'ErrorNotFound',
 });
 </script>
 
 <template>
-  <router-view />
+  <div class="text-white text-center q-pa-md flex flex-center"></div>
 </template>
