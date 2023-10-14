@@ -1,5 +1,7 @@
 <script lang="ts">
 import { ref } from 'vue';
+import NavMenu from 'src/components/NavMenu.vue';
+import CharmsPage from 'src/components/CharmsPage.vue';
 
 export default {
   setup() {
@@ -8,20 +10,20 @@ export default {
       drawerRight: ref(false),
     };
   },
+  components: { NavMenu, CharmsPage },
 };
 </script>
 
 <template>
   <q-page class="bg-black">
-    <div class="q-pa-lg row justify-center">
+    <div class="q-pa-lg row justify-center bg-black">
       <q-layout
         view="hHh lpR fFf"
         container
-        style="height: 92vh; max-width: 1200px"
-        class="shadow-2 rounded-borders bg-grey-10"
-        :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+        style="height: 94vh; max-width: 1200px"
+        class="shadow-2 bg-black"
       >
-        <q-header reveal :class="$q.dark.isActive ? 'bg-green' : 'bg-black'">
+        <q-header reveal class="bg-black">
           <q-toolbar>
             <q-btn
               flat
@@ -30,27 +32,35 @@ export default {
               dense
               icon="menu"
             />
-            <q-toolbar-title>A Hollow Knight Tracker</q-toolbar-title>
-            <p>27 / 112% Complete</p>
+            <q-toolbar-title>A Simple Hollow Knight Tracker</q-toolbar-title>
           </q-toolbar>
         </q-header>
 
-        <q-footer reveal :class="$q.dark.isActive ? 'bg-green' : 'bg-black'">
+        <q-footer reveal class="bg-black">
           <q-toolbar>
-            <q-toolbar-title>Footer</q-toolbar-title>
+            <q-toolbar-title></q-toolbar-title>
+            <h5>You are currently <b>27%</b> out of 112% Complete</h5>
+            <q-img src="broken-vessel.png" width="80px" />
           </q-toolbar>
         </q-footer>
 
-        <q-drawer v-model="drawerLeft" :width="200" :breakpoint="700">
-          <q-scroll-area class="fit bg-grey-10 text-white">
-            <div class="q-pa-sm">NAV</div>
-          </q-scroll-area>
+        <q-drawer
+          v-model="drawerLeft"
+          :width="200"
+          :breakpoint="700"
+          class="grad text-white"
+          fixed
+          style="top: 0; bottom: 0; height: 100vh"
+        >
+          <nav-menu />
         </q-drawer>
 
         <q-page-container>
-          <q-page class="q-pa-md bg-grey-10 text-white">
-            CONTENT
-            <q-page-sticky position="top" expand class="bg-primary text-white">
+          <q-page class="q-pa-md bg-grey-10 text-white mainborders">
+            <charms-page />
+            <q-page-sticky position="top" expand class="text-white">
+              <q-scroll-area style="height: 200px; max-width: 300px">
+              </q-scroll-area>
             </q-page-sticky>
           </q-page>
 
