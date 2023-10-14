@@ -4,5 +4,6 @@ export interface Charm {
   location: string;
   name: string;
   youtube: string;
+  image: string;
   is_complete: boolean;
 }
