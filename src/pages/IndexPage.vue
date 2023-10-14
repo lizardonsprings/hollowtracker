@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { db } from 'src/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { Percentage } from 'src/models/Percentage';
@@ -50,7 +50,7 @@ export default {
       completionPercentage,
     };
   },
-  components: { NavMenu, CharmsPage },
+  components: { NavMenu },
 };
 </script>
 
@@ -60,10 +60,10 @@ export default {
       <q-layout
         view="hHh lpR fFf"
         container
-        style="height: 98vh; max-width: 1200px"
+        style="height: 94vh; max-width: 1200px"
         class="shadow-2 bg-black mainborders"
       >
-        <q-header reveal class="bg-black">
+        <q-header class="bg-black">
           <q-toolbar>
             <q-btn
               flat
@@ -72,19 +72,15 @@ export default {
               dense
               icon="menu"
             />
-            <q-toolbar-title>A Simple Hollow Knight Tracker</q-toolbar-title>
-          </q-toolbar>
-        </q-header>
-
-        <q-footer reveal class="bg-black">
-          <q-toolbar>
-            <q-toolbar-title></q-toolbar-title>
-            <h5>
+            <q-toolbar-title class="q-mr-xs"
+              >A Simple Hollow Knight Tracker</q-toolbar-title
+            >
+            <h5 class="q-mb-md q-mt-xs">
               Your progress is currently {{ completionPercentage }}% out of 112%
             </h5>
             <q-img src="broken-vessel.png" width="80px" />
           </q-toolbar>
-        </q-footer>
+        </q-header>
 
         <q-drawer
           v-model="drawerLeft"
@@ -100,7 +96,7 @@ export default {
         <q-page-container class="">
           <q-page class="q-pa-md bg-grey-10 text-white mainborders">
             <div class="">
-              <charms-page />
+              <router-view />
               <q-page-sticky position="top" expand class="text-white">
                 <q-scroll-area> </q-scroll-area>
               </q-page-sticky>

@@ -1,8 +1,8 @@
 {
   "name": "hollowtracker",
   "version": "0.0.1",
-  "description": "A Hollow Knight completion tracker",
-  "productName": "A Hollow Knight Tracker",
+  "description": "A Simple Hollow Knight Tracker",
+  "productName": "A Simple Hollow Knight Tracker",
   "author": "Brendan O'Reilly <bren@aliensoap.co.uk>",
   "private": true,
   "scripts": {

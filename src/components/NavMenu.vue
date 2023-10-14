@@ -4,7 +4,16 @@
       <q-item clickable v-ripple>
         <q-item-section avatar>
           <q-avatar square>
-            <img src="charms/charms_kingsoul.png" />
+            <img src="elderbug.png" />
+          </q-avatar>
+        </q-item-section>
+        <q-item-section>Home</q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple>
+        <q-item-section avatar>
+          <q-avatar square>
+            <img src="charms/charms_carefree_melody.png" />
           </q-avatar>
         </q-item-section>
         <q-item-section>Charms</q-item-section>
