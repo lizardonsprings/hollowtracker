@@ -13,10 +13,10 @@ export default {
       const querySnapshot = await getDocs(collection(db, 'charms'));
 
       querySnapshot.forEach((doc) => {
-        // console.log(doc.id, " => ", doc.data());
+        console.log(doc.id, ' => ', doc.data());
         // console.log(blogArray);
 
-        const blogPost = {
+        const charms = {
           id: doc.id,
           info: doc.data().info,
           location: doc.data().location,
@@ -25,12 +25,13 @@ export default {
           is_complete: doc.data().is_complete,
         };
 
-        charmArray.push(blogPost);
+        charmArray.push(charms);
       });
       charms.value = charmArray;
     });
     return {
       expanded: ref(false),
+      charms,
     };
   },
 };
@@ -40,7 +41,13 @@ export default {
   <div class="component-padding">
     <div class="row q-py-md row q-px-md">
       <div class="col row q-py-sm row q-px-sm">
-        <q-card class="my-card bg-grey-9" flat bordered>
+        <q-card
+          class="my-card bg-grey-9"
+          flat
+          bordered
+          v-for="(charm, i) in charms"
+          :key="i"
+        >
           <q-item>
             <q-item-section avatar>
               <q-avatar>
@@ -49,20 +56,19 @@ export default {
             </q-item-section>
 
             <q-item-section>
-              <div class="text-h5 q-mt-sm q-mb-xs">Wayward Compass</div>
+              <div class="text-h5 q-mt-sm q-mb-xs">{{ charm.name }}</div>
             </q-item-section>
           </q-item>
 
           <q-separator />
 
           <q-card-section>
-            Whispers its location to the bearer whenever a map is open, allowing
-            wanderers to pinpoint their current location.
+            {{ charm.info }}
           </q-card-section>
 
           <q-separator />
 
-          <q-card-section> Bought from Isolde for 220 Geo. </q-card-section>
+          <q-card-section> {{ charm.location }} </q-card-section>
 
           <q-card-actions>
             <q-btn flat round icon="close" color="red" />
