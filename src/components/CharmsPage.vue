@@ -93,9 +93,13 @@ export default {
               <q-card-section> {{ charm.location }} </q-card-section>
 
               <q-card-actions>
-                <q-btn flat round icon="close" color="red" />
-                <q-btn flat color="primary" label="Mark as completed" />
+                <q-icon size="1.5rem" name="close" color="red" />
                 <q-space />
+                <q-btn flat color="grey-6" label="Mark as completed" />
+                <q-space />
+                <q-space />
+                <q-space />
+                <span class="q-pr-md text-overline">Expand for video</span>
 
                 <q-btn
                   color="grey"
@@ -118,10 +122,7 @@ export default {
                 <div v-show="expandedArray[rowIndex][colIndex]">
                   <q-separator />
                   <q-card-section class="text-subtitle2" style="height: 300px">
-                    <q-video
-                      style="height: 270px"
-                      src="https://www.youtube.com/embed/D37-Z6HeWPQ?si=l8Q2UiEQajoUtusJ"
-                    />
+                    <q-video style="height: 270px" :src="`${charm.youtube}`" />
                   </q-card-section>
                 </div>
               </q-slide-transition>

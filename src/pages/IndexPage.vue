@@ -58,72 +58,72 @@ export default {
       <div class="row q-pl-lg q-pt-xl">
         <div class="col-4">
           <q-img src="charms/charms_lifeblood_heart.png" width="50px " />
-          <span class="q-pl-md text-h4">Charms</span>
+          <span class="q-pl-lg text-h4">Charms</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 40%</div>
         <div class="col-4 q-pl-lg">
           <q-img src="mask-shard.png" width="50px " />
-          <span class="q-pl-md text-h4">Mask Shards</span>
+          <span class="q-pl-lg text-h4">Mask Shards</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 4%</div>
       </div>
       <div class="row q-pl-lg q-pt-xl">
         <div class="col-4">
           <q-img src="vessel-fragment.png" width="50px " />
-          <span class="q-pl-md text-h5">Vessel Fragments</span>
+          <span class="q-pl-lg text-h4">Vessels</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
         <div class="col-4 q-pl-lg">
           <q-img src="bosses/boss_crystal_guardian.png" width="50px " />
-          <span class="q-pl-md text-h4">Bosses</span>
+          <span class="q-pl-lg text-h4">Bosses</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 16%</div>
       </div>
       <div class="row q-pl-lg q-pt-xl">
         <div class="col-4">
           <q-img src="dreamers/dream_boss_marmu.png" width="50px " />
-          <span class="q-pl-md text-h5">Dreamers</span>
+          <span class="q-pl-lg text-h4">Dreamers</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 11%</div>
         <div class="col-4 q-pl-lg">
           <q-img src="nailsmith.png" width="50px " />
-          <span class="q-pl-md text-h4">Nail Upgrades</span>
+          <span class="q-pl-lg text-h4">Nail Upgrade</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 4%</div>
       </div>
       <div class="row q-pl-lg q-pt-xl">
         <div class="col-4">
           <q-img src="seer.png" width="50px " />
-          <span class="q-pl-md text-h5">Dream Nail</span>
+          <span class="q-pl-lg text-h4">Dream Nail</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
         <div class="col-4 q-pl-lg">
           <q-img src="nailmaster-sheo.png" width="50px " />
-          <span class="q-pl-md text-h4">Nail Arts</span>
+          <span class="q-pl-lg text-h4">Nail Art</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
       </div>
       <div class="row q-pl-lg q-pt-xl">
         <div class="col-4">
           <q-img src="monarch-wings.png" width="50px " />
-          <span class="q-pl-md text-h5">Equipment</span>
+          <span class="q-pl-lg text-h4">Equipment</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 14%</div>
         <div class="col-4 q-pl-lg">
           <q-img src="howling-wraiths.png" width="50px " />
-          <span class="q-pl-md text-h4">Spells</span>
+          <span class="q-pl-lg text-h4">Spells</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 6%</div>
       </div>
       <div class="row q-pl-lg q-pt-xl">
         <div class="col-4">
           <q-img src="zote.png" width="50px " />
-          <span class="q-pl-md text-h5">Colosseum</span>
+          <span class="q-pl-lg text-h4">Colosseum</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
         <div class="col-4 q-pl-lg">
           <q-img src="godseeker.png" width="50px " />
-          <span class="q-pl-md text-h4">Godhome</span>
+          <span class="q-pl-lg text-h4">Godhome</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 5%</div>
       </div>
