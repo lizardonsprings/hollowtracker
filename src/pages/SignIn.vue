@@ -20,7 +20,7 @@ export default {
           of Hollow Knight, progress will be linked to your Google account.
         </div>
         <div class="q-pt-xl q-pl-xl">
-          <q-img class="bottom-fixed-image" src="unn.png" width="530px" />
+          <q-img class="bottom-fixed-image" src="unn.png" width="450px" />
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@ export default {
 .bottom-fixed-image {
   position: fixed;
   bottom: 0;
-  left: 52%;
+  left: 60%;
   transform: translateX(-50%);
 }
 </style>
