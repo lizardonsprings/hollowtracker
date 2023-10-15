@@ -39,7 +39,7 @@ export default {
 <template>
   <div>
     <div class="">
-      <div class="q-pl-lg q-pt-md text-h2">Overview</div>
+      <div class="q-pl-xl q-pt-md text-h2">Overview</div>
       <div class="row q-pl-lg q-pt-lg">
         <div class="col-4">
           <q-img src="charms/charms_lifeblood_heart.png" width="50px " />

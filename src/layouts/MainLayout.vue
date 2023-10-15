@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { db } from 'src/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import {
@@ -34,6 +34,15 @@ export default {
     };
 
     const isLoggedIn = ref(false);
+    const drawerLeft = ref(false);
+
+    const toggleDrawer = () => {
+      drawerLeft.value = !drawerLeft.value;
+    };
+
+    const computedDrawerLeft = computed(() => {
+      return isLoggedIn.value || drawerLeft.value;
+    });
 
     onMounted(() => {
       onAuthStateChanged(auth, (userData) => {
@@ -94,7 +103,7 @@ export default {
     });
 
     return {
-      drawerLeft: ref(true),
+      drawerLeft,
       drawerRight: ref(false),
       isPaddingEnabled,
       percentages,
@@ -106,6 +115,8 @@ export default {
       name,
       profilePic,
       togglePadding,
+      toggleDrawer,
+      computedDrawerLeft,
     };
   },
   components: { NavMenu },
@@ -127,7 +138,7 @@ export default {
               <q-toolbar>
                 <q-btn
                   flat
-                  @click="(drawerLeft = !drawerLeft), togglePadding()"
+                  @click="toggleDrawer(), togglePadding()"
                   round
                   dense
                   icon="menu"
@@ -135,17 +146,18 @@ export default {
                 <q-toolbar-title class="q-mr-xs">
                   A Simple Hollow Knight Tracker
                 </q-toolbar-title>
-                <h5 class="q-mb-md q-mt-xs">
-                  <div class="q-pt-xs">
-                    <span class="text-h6"
-                      >Your overall progress is currently
-                    </span>
-                    <span class="text-h5"
-                      >{{ completionPercentage }} out of 112%</span
-                    >
+
+                <div>
+                  <div v-if="isLoggedIn" class="">
+                    <span class="">Your overall progress is currently </span>
+                    <span class="text-h5">{{ completionPercentage }}</span>
+                    <span class=""> out of </span>
+                    <span class="text-h5">112%</span>
                   </div>
-                </h5>
-                <q-img src="broken-vessel.png" width="60px" />
+                </div>
+                <div class="q-pb-xs q-pr-lg">
+                  <q-img src="broken-vessel.png" width="60px" />
+                </div>
               </q-toolbar>
             </q-header>
 
@@ -180,7 +192,7 @@ export default {
                 <q-space />
                 <div class="row">
                   <div class="q-pt-lg q-pr-md">
-                    <span> Click the icon to the right to sign in </span>
+                    <span> Click the icon to sign in </span>
                   </div>
                   <div class="q-pt-md q-pr-sm">
                     <q-avatar rounded size="40px">
@@ -205,7 +217,7 @@ export default {
 
             <q-drawer
               v-model="drawerLeft"
-              :width="200"
+              :width="216"
               :breakpoint="700"
               class="grad text-white"
               overlay
@@ -216,7 +228,7 @@ export default {
             </q-drawer>
 
             <q-page-container
-              :class="{ 'component-padding': isPaddingEnabled }"
+              :class="{ 'component-padding': !isPaddingEnabled }"
             >
               <q-page class="q-pa-md bg-grey-10 text-white mainborders">
                 <div class="">

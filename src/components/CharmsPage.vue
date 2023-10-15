@@ -54,7 +54,7 @@ export default {
 <template>
   <div>
     <div class="row">
-      <div class="col-10 q-pl-lg q-pt-md text-h2">Charms</div>
+      <div class="col-10 q-pl-xl q-pt-md text-h2">Charms</div>
       <div class="q-pl-xl text-h4"><span class="text-h5">0</span> / 40%</div>
     </div>
     <div class="row q-py-md row q-px-md">
@@ -95,11 +95,10 @@ export default {
               <q-card-actions>
                 <q-icon size="1.5rem" name="close" color="red" />
                 <q-space />
-                <q-btn flat color="grey-6" label="Mark as completed" />
+                <q-btn flat color="grey-4" label="Mark as completed" />
                 <q-space />
                 <q-space />
                 <q-space />
-                <!-- <span class="q-pr-md text-overline">Expand for video</span> -->
                 <q-btn
                   flat
                   color="grey-6"
