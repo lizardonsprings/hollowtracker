@@ -40,7 +40,7 @@ export default {
   <div>
     <div class="">
       <div class="q-pl-lg q-pt-md text-h2">Overview</div>
-      <div class="row q-pl-lg q-pt-xl">
+      <div class="row q-pl-lg q-pt-lg">
         <div class="col-4">
           <q-img src="charms/charms_lifeblood_heart.png" width="50px " />
           <span class="q-pl-lg text-h4">Charms</span>
