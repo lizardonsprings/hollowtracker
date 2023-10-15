@@ -4,7 +4,6 @@ import { db } from 'src/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { Percentage } from 'src/models/Percentage';
 import NavMenu from 'src/components/NavMenu.vue';
-import CharmsPage from 'src/components/CharmsPage.vue';
 
 export default {
   setup() {
@@ -78,10 +77,16 @@ export default {
                   >A Simple Hollow Knight Tracker</q-toolbar-title
                 >
                 <h5 class="q-mb-md q-mt-xs">
-                  Your overall progress is currently
-                  {{ completionPercentage }} out of 112%
+                  <div class="q-pt-xs">
+                    <span class="text-h6"
+                      >Your overall progress is currently
+                    </span>
+                    <span class="text-h5"
+                      >{{ completionPercentage }} out of 112%</span
+                    >
+                  </div>
                 </h5>
-                <q-img src="broken-vessel.png" width="80px" />
+                <q-img src="broken-vessel.png" width="70px" />
               </q-toolbar>
             </q-header>
 

@@ -54,8 +54,8 @@ export default {
 <template>
   <div class="component-padding">
     <div class="row">
-      <div class="col-10 q-pl-lg text-h2">Charms</div>
-      <div class="q-pl-lg text-h4"><span class="text-h5">3%</span> / 47%</div>
+      <div class="col-10 q-pl-lg q-pt-md text-h2">Charms</div>
+      <div class="q-pl-xl text-h4"><span class="text-h5">0</span> / 40%</div>
     </div>
     <div class="row q-py-md row q-px-md">
       <div class="col row q-py-sm row q-px-sm">

@@ -54,7 +54,7 @@ export default {
 <template>
   <div class="component-padding">
     <div class="">
-      <div class="q-pl-lg text-h2">Total Progress</div>
+      <div class="q-pl-lg q-pt-md text-h2">Overview</div>
       <div class="row q-pl-lg q-pt-xl">
         <div class="col-4">
           <q-img src="charms/charms_lifeblood_heart.png" width="50px " />
