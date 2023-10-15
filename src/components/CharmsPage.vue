@@ -99,8 +99,16 @@ export default {
                 <q-space />
                 <q-space />
                 <q-space />
-                <span class="q-pr-md text-overline">Expand for video</span>
-
+                <!-- <span class="q-pr-md text-overline">Expand for video</span> -->
+                <q-btn
+                  flat
+                  color="grey-6"
+                  label="EXPAND FOR VIDEO"
+                  @click="
+                    expandedArray[rowIndex][colIndex] =
+                      !expandedArray[rowIndex][colIndex]
+                  "
+                />
                 <q-btn
                   color="grey"
                   round

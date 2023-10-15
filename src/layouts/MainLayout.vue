@@ -2,11 +2,58 @@
 import { ref, onMounted, watch } from 'vue';
 import { db } from 'src/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut,
+} from 'firebase/auth';
+import { useRouter } from 'vue-router';
 import { Percentage } from 'src/models/Percentage';
 import NavMenu from 'src/components/NavMenu.vue';
 
 export default {
   setup() {
+    let user = getAuth().currentUser;
+    let name;
+
+    if (user != null) {
+      name = user.displayName;
+    }
+
+    const router = useRouter();
+    const signInWithGoogle = () => {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(getAuth(), provider)
+        .then((result) => {
+          router.push('/home');
+        })
+        .catch((result) => {
+          // error handling
+        });
+    };
+
+    const isLoggedIn = ref(false);
+    let auth: any;
+
+    onMounted(() => {
+      auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          isLoggedIn.value = true;
+        } else {
+          isLoggedIn.value = false;
+        }
+      });
+    });
+
+    const handleSignOut = () => {
+      signOut(auth).then(() => {
+        router.push('/');
+      });
+    };
+
     const percentages = ref<Percentage[]>([]);
     const completionPercentage = ref<number>(0);
     let answerArray: Percentage[] = [];
@@ -17,15 +64,12 @@ export default {
 
     const fetchData = async () => {
       const querySnapshot = await getDocs(collection(db, 'percentage'));
-
       querySnapshot.forEach((doc) => {
         const answer = {
           is_complete: doc.data().is_complete,
         };
-
         answerArray.push(answer);
       });
-
       percentages.value = answerArray;
     };
 
@@ -37,7 +81,6 @@ export default {
     };
 
     watch(percentages, () => {
-      // Update completionPercentage when percentages array changes
       completionPercentage.value = calculateSum(percentages.value);
     });
 
@@ -47,6 +90,10 @@ export default {
       percentages,
       calculateSum,
       completionPercentage,
+      signInWithGoogle,
+      handleSignOut,
+      isLoggedIn,
+      name,
     };
   },
   components: { NavMenu },
@@ -73,9 +120,23 @@ export default {
                   dense
                   icon="menu"
                 />
-                <q-toolbar-title class="q-mr-xs"
-                  >A Simple Hollow Knight Tracker</q-toolbar-title
-                >
+                <q-toolbar-title class="q-mr-xs">
+                  <q-btn
+                    v-if="!isLoggedIn"
+                    flat
+                    class="text-h5"
+                    @click="signInWithGoogle()"
+                    >Sign In
+                  </q-btn>
+                  <div v-if="isLoggedIn" class="row">
+                    <span class="q-pt-sm">
+                      Currently logged in as {{ name }}</span
+                    >
+                    <q-btn flat class="text-h6" @click="handleSignOut()"
+                      >Sign Out</q-btn
+                    >
+                  </div>
+                </q-toolbar-title>
                 <h5 class="q-mb-md q-mt-xs">
                   <div class="q-pt-xs">
                     <span class="text-h6"
@@ -86,7 +147,7 @@ export default {
                     >
                   </div>
                 </h5>
-                <q-img src="broken-vessel.png" width="70px" />
+                <q-img src="broken-vessel.png" width="60px" />
               </q-toolbar>
             </q-header>
 

@@ -36,18 +36,6 @@ export default {
       charms,
     };
   },
-  computed: {
-    charmPairs() {
-      const pairs = [];
-      for (let i = 0; i < this.charms.length; i += 2) {
-        const pair = [];
-        if (this.charms[i]) pair.push(this.charms[i]);
-        if (this.charms[i + 1]) pair.push(this.charms[i + 1]);
-        pairs.push(pair);
-      }
-      return pairs;
-    },
-  },
 };
 </script>
 

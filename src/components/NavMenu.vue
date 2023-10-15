@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-sm">
     <q-list>
-      <router-link to="/">
+      <router-link to="/home">
         <q-item clickable v-ripple>
           <q-item-section avatar>
             <q-avatar square>
