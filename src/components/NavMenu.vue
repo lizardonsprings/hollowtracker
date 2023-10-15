@@ -1,23 +1,27 @@
 <template>
   <div class="q-pa-sm">
     <q-list>
-      <q-item clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar square>
-            <img src="elderbug.png" />
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>Home</q-item-section>
-      </q-item>
+      <router-link to="/">
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="elderbug.png" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Home</q-item-section>
+        </q-item>
+      </router-link>
 
-      <q-item clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar square>
-            <img src="charms/charms_carefree_melody.png" />
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>Charms</q-item-section>
-      </q-item>
+      <router-link to="/charms">
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar square>
+              <img src="charms/charms_carefree_melody.png" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>Charms</q-item-section>
+        </q-item>
+      </router-link>
 
       <q-item clickable v-ripple>
         <q-item-section avatar>

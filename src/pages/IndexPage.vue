@@ -1,113 +1,132 @@
 <script lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import { db } from 'src/firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { Percentage } from 'src/models/Percentage';
-import NavMenu from 'src/components/NavMenu.vue';
-import CharmsPage from 'src/components/CharmsPage.vue';
+import { Charm } from 'src/models/Charms';
 
 export default {
   setup() {
-    const percentages = ref<Percentage[]>([]);
-    const completionPercentage = ref<number>(0);
-    let answerArray: Percentage[] = [];
+    const charms = ref<Charm[]>([]);
+    let charmArray: Charm[] = [];
+    const expandedArray = ref<boolean[][]>([]);
 
     onMounted(async () => {
-      await fetchData(); // Initial data fetch
-    });
-
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'percentage'));
+      const querySnapshot = await getDocs(collection(db, 'charms'));
 
       querySnapshot.forEach((doc) => {
-        const answer = {
+        const charm = {
+          id: doc.id,
+          name: doc.data().name,
+          info: doc.data().info,
+          location: doc.data().location,
+          image: doc.data().image,
+          youtube: doc.data().youtube,
           is_complete: doc.data().is_complete,
         };
 
-        answerArray.push(answer);
+        charmArray.push(charm);
+        expandedArray.value.push([false, false]);
       });
 
-      percentages.value = answerArray;
-    };
-
-    const calculateSum = (percentages: Percentage[]): number => {
-      return percentages.reduce(
-        (acc, curr) => acc + (curr.is_complete ? 1 : 0),
-        0
-      );
-    };
-
-    watch(percentages, () => {
-      // Update completionPercentage when percentages array changes
-      completionPercentage.value = calculateSum(percentages.value);
+      charms.value = charmArray;
     });
 
     return {
-      drawerLeft: ref(true),
-      drawerRight: ref(false),
-      percentages,
-      calculateSum,
-      completionPercentage,
+      expandedArray,
+      charms,
     };
   },
-  components: { NavMenu },
+  computed: {
+    charmPairs() {
+      const pairs = [];
+      for (let i = 0; i < this.charms.length; i += 2) {
+        const pair = [];
+        if (this.charms[i]) pair.push(this.charms[i]);
+        if (this.charms[i + 1]) pair.push(this.charms[i + 1]);
+        pairs.push(pair);
+      }
+      return pairs;
+    },
+  },
 };
 </script>
 
 <template>
-  <q-page class="bg-black">
-    <div class="q-pa-lg row justify-center bg-black">
-      <q-layout
-        view="hHh lpR fFf"
-        container
-        style="height: 94vh; max-width: 1200px"
-        class="shadow-2 bg-black mainborders"
-      >
-        <q-header class="bg-black">
-          <q-toolbar>
-            <q-btn
-              flat
-              @click="drawerLeft = !drawerLeft"
-              round
-              dense
-              icon="menu"
-            />
-            <q-toolbar-title class="q-mr-xs"
-              >A Simple Hollow Knight Tracker</q-toolbar-title
-            >
-            <h5 class="q-mb-md q-mt-xs">
-              Your progress is currently {{ completionPercentage }}% out of 112%
-            </h5>
-            <q-img src="broken-vessel.png" width="80px" />
-          </q-toolbar>
-        </q-header>
-
-        <q-drawer
-          v-model="drawerLeft"
-          :width="200"
-          :breakpoint="700"
-          class="grad text-white"
-          overlay
-          style="top: 0; bottom: 0; height: 100vh"
-        >
-          <nav-menu />
-        </q-drawer>
-
-        <q-page-container class="">
-          <q-page class="q-pa-md bg-grey-10 text-white mainborders">
-            <div class="">
-              <router-view />
-              <q-page-sticky position="top" expand class="text-white">
-                <q-scroll-area> </q-scroll-area>
-              </q-page-sticky>
-            </div>
-          </q-page>
-
-          <q-page-scroller position="bottom">
-            <q-btn fab icon="keyboard_arrow_up" color="red" />
-          </q-page-scroller>
-        </q-page-container>
-      </q-layout>
+  <div class="component-padding">
+    <div class="">
+      <div class="q-pl-lg text-h2">Total Progress</div>
+      <div class="row q-pl-lg q-pt-xl">
+        <div class="col-4">
+          <q-img src="charms/charms_lifeblood_heart.png" width="50px " />
+          <span class="q-pl-md text-h4">Charms</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 40%</div>
+        <div class="col-4 q-pl-lg">
+          <q-img src="mask-shard.png" width="50px " />
+          <span class="q-pl-md text-h4">Mask Shards</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 4%</div>
+      </div>
+      <div class="row q-pl-lg q-pt-xl">
+        <div class="col-4">
+          <q-img src="vessel-fragment.png" width="50px " />
+          <span class="q-pl-md text-h5">Vessel Fragments</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
+        <div class="col-4 q-pl-lg">
+          <q-img src="bosses/boss_crystal_guardian.png" width="50px " />
+          <span class="q-pl-md text-h4">Bosses</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 16%</div>
+      </div>
+      <div class="row q-pl-lg q-pt-xl">
+        <div class="col-4">
+          <q-img src="dreamers/dream_boss_marmu.png" width="50px " />
+          <span class="q-pl-md text-h5">Dreamers</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 11%</div>
+        <div class="col-4 q-pl-lg">
+          <q-img src="nailsmith.png" width="50px " />
+          <span class="q-pl-md text-h4">Nail Upgrades</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 4%</div>
+      </div>
+      <div class="row q-pl-lg q-pt-xl">
+        <div class="col-4">
+          <q-img src="seer.png" width="50px " />
+          <span class="q-pl-md text-h5">Dream Nail</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
+        <div class="col-4 q-pl-lg">
+          <q-img src="nailmaster-sheo.png" width="50px " />
+          <span class="q-pl-md text-h4">Nail Arts</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
+      </div>
+      <div class="row q-pl-lg q-pt-xl">
+        <div class="col-4">
+          <q-img src="monarch-wings.png" width="50px " />
+          <span class="q-pl-md text-h5">Equipment</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 14%</div>
+        <div class="col-4 q-pl-lg">
+          <q-img src="howling-wraiths.png" width="50px " />
+          <span class="q-pl-md text-h4">Spells</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 6%</div>
+      </div>
+      <div class="row q-pl-lg q-pt-xl">
+        <div class="col-4">
+          <q-img src="zote.png" width="50px " />
+          <span class="q-pl-md text-h5">Colosseum</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
+        <div class="col-4 q-pl-lg">
+          <q-img src="godseeker.png" width="50px " />
+          <span class="q-pl-md text-h4">Godhome</span>
+        </div>
+        <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 5%</div>
+      </div>
     </div>
-  </q-page>
+  </div>
 </template>
