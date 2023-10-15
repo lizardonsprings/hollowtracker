@@ -23,7 +23,13 @@ const routes: RouteRecordRaw[] = [
     path: '/charms',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/charms', component: () => import('components/CharmsPage.vue') },
+      {
+        path: '/charms',
+        component: () => import('components/CharmsPage.vue'),
+        meta: {
+          requiresAuth: true,
+        },
+      },
     ],
   },
 

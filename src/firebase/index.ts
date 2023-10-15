@@ -2,6 +2,7 @@
 
 import { initializeApp, FirebaseApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 // import { getAnalytics } from 'firebase/analytics';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,9 +22,22 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-
+// const analytics = getAnalytics(app);
 const app: FirebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-// const analytics = getAnalytics(app);
+const auth = getAuth(app);
 
-export { db };
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (user) => {
+        unsubscribe();
+        resolve(user);
+      },
+      reject
+    );
+  });
+};
+
+export { db, auth, getCurrentUser };

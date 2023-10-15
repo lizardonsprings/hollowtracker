@@ -8,7 +8,6 @@ export default {
   setup() {
     const charms = ref<Charm[]>([]);
     let charmArray: Charm[] = [];
-    const expandedArray = ref<boolean[][]>([]);
 
     onMounted(async () => {
       const querySnapshot = await getDocs(collection(db, 'charms'));
@@ -25,14 +24,12 @@ export default {
         };
 
         charmArray.push(charm);
-        expandedArray.value.push([false, false]);
       });
 
       charms.value = charmArray;
     });
 
     return {
-      expandedArray,
       charms,
     };
   },
@@ -40,7 +37,7 @@ export default {
 </script>
 
 <template>
-  <div class="component-padding">
+  <div>
     <div class="">
       <div class="q-pl-lg q-pt-md text-h2">Overview</div>
       <div class="row q-pl-lg q-pt-xl">
@@ -87,7 +84,7 @@ export default {
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
         <div class="col-4 q-pl-lg">
           <q-img src="nailmaster-sheo.png" width="50px " />
-          <span class="q-pl-lg text-h4">Nail Art</span>
+          <span class="q-pl-lg text-h4">Nail Arts</span>
         </div>
         <div class="col-2 text-h3"><span class="text-h4">0 </span>/ 3%</div>
       </div>

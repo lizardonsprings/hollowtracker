@@ -15,41 +15,45 @@ import NavMenu from 'src/components/NavMenu.vue';
 
 export default {
   setup() {
-    let user = getAuth().currentUser;
-    let name;
-
-    if (user != null) {
-      name = user.displayName;
-    }
-
     const router = useRouter();
+    const auth = getAuth();
+    const user = ref(auth.currentUser);
+    const name = ref<string | null>(null);
+    const profilePic = ref<string | null>(null);
+
     const signInWithGoogle = () => {
       const provider = new GoogleAuthProvider();
-      signInWithPopup(getAuth(), provider)
+      signInWithPopup(auth, provider)
         .then((result) => {
+          user.value = result.user;
           router.push('/home');
         })
-        .catch((result) => {
-          // error handling
+        .catch((error) => {
+          console.error('Error signing in with Google:', error);
         });
     };
 
     const isLoggedIn = ref(false);
-    let auth: any;
 
     onMounted(() => {
-      auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          isLoggedIn.value = true;
+      onAuthStateChanged(auth, (userData) => {
+        user.value = userData;
+        isLoggedIn.value = !!userData;
+
+        if (userData) {
+          name.value = userData.displayName || null;
+          profilePic.value = userData.photoURL || null;
         } else {
-          isLoggedIn.value = false;
+          name.value = null;
+          profilePic.value = null;
         }
       });
     });
 
     const handleSignOut = () => {
       signOut(auth).then(() => {
+        user.value = null;
+        name.value = null;
         router.push('/');
       });
     };
@@ -80,6 +84,11 @@ export default {
       );
     };
 
+    const isPaddingEnabled = ref(true);
+    const togglePadding = () => {
+      isPaddingEnabled.value = !isPaddingEnabled.value;
+    };
+
     watch(percentages, () => {
       completionPercentage.value = calculateSum(percentages.value);
     });
@@ -87,6 +96,7 @@ export default {
     return {
       drawerLeft: ref(true),
       drawerRight: ref(false),
+      isPaddingEnabled,
       percentages,
       calculateSum,
       completionPercentage,
@@ -94,6 +104,8 @@ export default {
       handleSignOut,
       isLoggedIn,
       name,
+      profilePic,
+      togglePadding,
     };
   },
   components: { NavMenu },
@@ -115,27 +127,13 @@ export default {
               <q-toolbar>
                 <q-btn
                   flat
-                  @click="drawerLeft = !drawerLeft"
+                  @click="(drawerLeft = !drawerLeft), togglePadding()"
                   round
                   dense
                   icon="menu"
                 />
                 <q-toolbar-title class="q-mr-xs">
-                  <q-btn
-                    v-if="!isLoggedIn"
-                    flat
-                    class="text-h5"
-                    @click="signInWithGoogle()"
-                    >Sign In
-                  </q-btn>
-                  <div v-if="isLoggedIn" class="row">
-                    <span class="q-pt-sm">
-                      Currently logged in as {{ name }}</span
-                    >
-                    <q-btn flat class="text-h6" @click="handleSignOut()"
-                      >Sign Out</q-btn
-                    >
-                  </div>
+                  A Simple Hollow Knight Tracker
                 </q-toolbar-title>
                 <h5 class="q-mb-md q-mt-xs">
                   <div class="q-pt-xs">
@@ -151,6 +149,60 @@ export default {
               </q-toolbar>
             </q-header>
 
+            <q-footer class="bg-black">
+              <div v-if="isLoggedIn" class="row">
+                <q-space />
+                <div class="row">
+                  <div class="q-pt-lg q-pr-md">
+                    <span> Currently logged in as {{ name }} </span>
+                  </div>
+                  <div class="q-pt-md q-pr-sm">
+                    <q-avatar rounded size="40px">
+                      <img :src="`${profilePic}`" />
+                      <q-badge floating color="teal">!</q-badge>
+                      <q-menu>
+                        <q-list style="min-width: 75px">
+                          <q-item
+                            clickable
+                            v-close-popup
+                            @click="handleSignOut()"
+                          >
+                            <q-item-section>Sign Out</q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-menu>
+                    </q-avatar>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="!isLoggedIn" class="row">
+                <q-space />
+                <div class="row">
+                  <div class="q-pt-lg q-pr-md">
+                    <span> Click the icon to the right to sign in </span>
+                  </div>
+                  <div class="q-pt-md q-pr-sm">
+                    <q-avatar rounded size="40px">
+                      <img src="avatar-signin.png" />
+                      <q-badge floating color="teal">?</q-badge>
+                      <q-menu>
+                        <q-list style="min-width: 75px">
+                          <q-item
+                            clickable
+                            v-close-popup
+                            @click="signInWithGoogle()"
+                          >
+                            <q-item-section>Sign In</q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-menu>
+                    </q-avatar>
+                  </div>
+                </div>
+              </div>
+            </q-footer>
+
             <q-drawer
               v-model="drawerLeft"
               :width="200"
@@ -163,7 +215,9 @@ export default {
               <nav-menu />
             </q-drawer>
 
-            <q-page-container class="">
+            <q-page-container
+              :class="{ 'component-padding': isPaddingEnabled }"
+            >
               <q-page class="q-pa-md bg-grey-10 text-white mainborders">
                 <div class="">
                   <router-view />

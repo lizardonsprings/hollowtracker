@@ -52,7 +52,7 @@ export default {
 </script>
 
 <template>
-  <div class="component-padding">
+  <div>
     <div class="row">
       <div class="col-10 q-pl-lg q-pt-md text-h2">Charms</div>
       <div class="q-pl-xl text-h4"><span class="text-h5">0</span> / 40%</div>
